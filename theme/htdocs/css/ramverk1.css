@@ -5903,7 +5903,7 @@ img {
  * and other regions of the page including route specific styles.
  */
 /** ==============================================================
- * Horisontal grid setup 
+ * Horisontal grid setup
  */
 .inner-wrap {
   margin-right: auto;
@@ -5914,6 +5914,7 @@ img {
   margin-right: auto;
   margin-left: auto;
   max-width: 100%;
+  background-color: #50a0ba;
 }
 .row {
   display: block;
@@ -5927,7 +5928,7 @@ img {
   clear: both;
 }
 /** ==============================================================
- * Header 
+ * Header
  */
 /*
 .site-header {
@@ -6909,6 +6910,9 @@ a.rm-button.rm-clicked .rm-button-face-2 {
   background-color: #b5dce1;
   border: 1px solid #6cbac4;
   color: #111;
+}
+.region-header {
+  background-color: lightblue;
 }
 .site-logo {
   position: absolute;
