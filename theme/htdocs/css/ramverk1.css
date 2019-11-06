@@ -6531,7 +6531,7 @@ a.rm-button.rm-clicked .rm-button-face-2 {
  * Base
  */
 /** ==============================================================
- * Header 
+ * Header
  */
 /**
  * A header style for dbwebb.se.
@@ -6637,16 +6637,11 @@ a.rm-button.rm-clicked .rm-button-face-2 {
 .site-logo-text {
   font-size: 42px;
   line-height: 1;
-  text-shadow: 2px -2px 2px #ccc;
 }
 .site-logo-text a {
   color: #333;
   text-decoration: none;
   transition: all 0.2s linear;
-}
-.site-logo-text a:hover {
-  color: #3B440D;
-  text-shadow: 2px -2px 2px #9FB129;
 }
 .site-logo-text-icon img {
   vertical-align: bottom;
