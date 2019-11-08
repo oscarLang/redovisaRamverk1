@@ -24,9 +24,28 @@ class IpValidatorController implements ContainerInjectableInterface
      *
      * @return string
      */
-    public function indexAction() : string
+    public function indexAction() : object
     {
-        return "HEllo";
+        $page = $this->di->get("page");
+        $ip = $this->di->request->getGet("ip");
+        $result = "";
+        if ( isset($ip) ) {
+            $valid = filter_var($ip, FILTER_VALIDATE_IP);
+            if ( $valid ) {
+                $result .= "The ip is valid";
+            }
+            else {
+                $result .= "The ip is not valid";
+            }
+        }
+        $data = [
+            "title" => "Input ip to validate",
+            "ip" => $ip,
+            "result" => $result
+        ];
+
+        $page->add("osln/ipvalidator/default", $data);
+        return $page->render();
     }
 
 
@@ -41,11 +60,13 @@ class IpValidatorController implements ContainerInjectableInterface
     public function pageActionGet() : object
     {
         $page = $this->di->get("page");
+        $ip = $this->di->request->getGet("ip");
         $data = [
-            "content" => "HELLO"
+            "title" => "Input ip to validate",
+            "ip" => $ip
         ];
 
-        $page->add("anax/v2/article/default", $data);
+        $page->add("osln/ipvalidator/default", $data);
         return $page->render();
     }
 }
