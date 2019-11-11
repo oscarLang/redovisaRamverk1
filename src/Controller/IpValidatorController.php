@@ -29,10 +29,16 @@ class IpValidatorController implements ContainerInjectableInterface
         $page = $this->di->get("page");
         $ip = $this->di->request->getGet("ip");
         $result = "";
+        $hostAddr = "";
         if ( isset($ip) ) {
-            $valid = filter_var($ip, FILTER_VALIDATE_IP);
-            if ( $valid ) {
-                $result .= "The ip is valid";
+            $validIpv4 = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+            $validIpv6 = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            $hostAddr .= gethostbyaddr($ip);
+            if ( $validIpv4 ) {
+                $result .= "The ip is valid IPV4";
+            }
+            else if ($validIpv6){
+                $result .= "The ip is valid IPV6";
             }
             else {
                 $result .= "The ip is not valid";
@@ -41,7 +47,8 @@ class IpValidatorController implements ContainerInjectableInterface
         $data = [
             "title" => "Input ip to validate",
             "ip" => $ip,
-            "result" => $result
+            "result" => $result,
+            "host" => $hostAddr
         ];
 
         $page->add("osln/ipvalidator/default", $data);
