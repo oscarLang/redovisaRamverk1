@@ -26,7 +26,6 @@ class IpValidatorController implements ContainerInjectableInterface
      */
     public function indexAction() : object
     {
-        $page = $this->di->get("page");
         $ip = $this->di->request->getGet("ip");
         $result = "";
         $hostAddr = "";
@@ -49,6 +48,7 @@ class IpValidatorController implements ContainerInjectableInterface
             "host" => $hostAddr
         ];
 
+        $page = $this->di->get("page");
         $page->add("osln/ipvalidator/default", $data);
         return $page->render();
     }
