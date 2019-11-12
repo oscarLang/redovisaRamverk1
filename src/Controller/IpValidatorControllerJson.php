@@ -12,7 +12,7 @@ use Anax\Commons\ContainerInjectableTrait;
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class IpValidatorController implements ContainerInjectableInterface
+class IpValidatorControllerJson implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -28,28 +28,39 @@ class IpValidatorController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
         $ip = $this->di->request->getGet("ip");
-        $result = "";
-        $hostAddr = "";
-        if ( isset($ip) ) {
-            if ( !filter_var($ip, FILTER_VALIDATE_IP) ) {
-                $result .= "The ip is not valid";
-            } else {
-                $hostAddr .= gethostbyaddr($ip);
-                if ( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
-                    $result .= "The ip is valid IPV4";
-                } else if ( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
-                    $result .= "The ip is valid IPV6";
-                }
-            }
-        }
         $data = [
             "title" => "Input ip to validate",
+            "ip" => $ip
+        ];
+
+        $page->add("osln/ipvalidator/json", $data);
+        return $page->render();
+    }
+
+    public function responseActionGet() : array
+    {
+        $ip = $this->di->request->getGet("ip");
+        $result = "";
+        $hostAddr = "";
+        if ( isset($ip) && filter_var($ip, FILTER_VALIDATE_IP) ) {
+
+            $hostAddr .= gethostbyaddr($ip);
+            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                $result .= "The ip is valid IPV4";
+            }
+            else if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)){
+                $result .= "The ip is valid IPV6";
+            }
+        }
+        else {
+            $result .= "The ip is not valid";
+        }
+        $data = [
             "ip" => $ip,
             "result" => $result,
             "host" => $hostAddr
         ];
 
-        $page->add("osln/ipvalidator/default", $data);
-        return $page->render();
+        return [$data];
     }
 }

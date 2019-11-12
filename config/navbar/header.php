@@ -42,6 +42,20 @@ return [
             "text" => "IP",
             "url" => "ipvalidator1",
             "title" => "Ip-validator.",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Standard",
+                        "url" => "ipvalidator1",
+                        "title" => "Ip-validator.",
+                    ],
+                    [
+                        "text" => "JSON",
+                        "url" => "ipvaljson",
+                        "title" => "Ip-validator with JSON.",
+                    ],
+                ],
+            ],
         ],
         [
             "text" => "Styleväljare",

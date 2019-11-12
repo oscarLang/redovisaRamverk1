@@ -11,5 +11,10 @@ return [
             "mount" => "ipvalidator1",
             "handler" => "\Anax\Controller\IpValidatorController",
         ],
+        [
+            "info" => "IP-validator to JSON",
+            "mount" => "ipvaljson",
+            "handler" => "\Anax\Controller\IpValidatorControllerJson",
+        ],
     ]
 ];
