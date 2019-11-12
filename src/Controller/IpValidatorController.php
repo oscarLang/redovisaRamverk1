@@ -29,14 +29,14 @@ class IpValidatorController implements ContainerInjectableInterface
         $ip = $this->di->request->getGet("ip");
         $result = "";
         $hostAddr = "";
-        if ( isset($ip) ) {
-            if ( !filter_var($ip, FILTER_VALIDATE_IP) ) {
+        if (isset($ip)) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP)) {
                 $result .= "The ip is not valid";
             } else {
                 $hostAddr .= gethostbyaddr($ip);
-                if ( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $result .= "The ip is valid IPV4";
-                } else if ( filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
+                } else if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                     $result .= "The ip is valid IPV6";
                 }
             }
