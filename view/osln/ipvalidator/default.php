@@ -19,7 +19,7 @@ if (isset($class)) {
         <input type="text" name="ip" value="<?= $ip ?>">
         <input type="submit" value="Send">
     </form>
-    <?php if ($ip != ""): ?>
+    <?php if ($ip != "") : ?>
         <p> <?= $ip ?> , Addr: <?= $host ?></p>
         <p> <?= $result ?> </p>
     <?php endif ?>
