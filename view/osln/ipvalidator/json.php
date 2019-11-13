@@ -25,7 +25,7 @@ if (isset($class)) {
             /ipvaljson/response?ip={ip}
         </code>
     </p>
-    <a href="/dbwebb/ramverk1/me/redovisa/htdocs/ipvaljson/response?ip=127.0.0.1">Valid IPV4 address</a>
-    <a href="/dbwebb/ramverk1/me/redovisa/htdocs/ipvaljson/response?ip=2001:db8:85a3:0:0:8a2e:370:7334">Valid IPV6 address</a>
-    <a href="/dbwebb/ramverk1/me/redovisa/htdocs/ipvaljson/response?ip=127.0.342234.1">Invalid IPV4 address</a>
+    <a href="ipvaljson/response?ip=127.0.0.1">Valid IPV4 address</a>
+    <a href="ipvaljson/response?ip=2001:db8:85a3:0:0:8a2e:370:7334">Valid IPV6 address</a>
+    <a href="ipvaljson/response?ip=127.0.342234.1">Invalid IPV4 address</a>
 </article>
