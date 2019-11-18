@@ -54,6 +54,11 @@ return [
                         "url" => "ipvaljson",
                         "title" => "Ip-validator with JSON.",
                     ],
+                    [
+                        "text" => "Geo",
+                        "url" => "ipgeo",
+                        "title" => "Ip Geo Locator.",
+                    ],
                 ],
             ],
         ],
