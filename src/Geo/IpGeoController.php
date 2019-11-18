@@ -20,12 +20,6 @@ class IpGeoController implements ContainerInjectableInterface
     {
         $this->geo = new GeoValidator();
         $this->ipstack = new IpstackModule();
-        $this->ipstack->test();
-        $user_ip = $this->geo->getUserIp();
-        if ($user_ip != "")
-        {
-            $this->di->request->setGet("ip", $user_ip);
-        }
     }
     /**
      * This is the index method action, it handles:
@@ -38,27 +32,35 @@ class IpGeoController implements ContainerInjectableInterface
     public function indexAction() : object
     {
         $page = $this->di->get("page");
-        $ip = $this->di->request->getGet("ip");
+        $session = $this->di->get("session");
+
         $data = [
             "title" => "Input ip to validate",
-            "ip" => $ip,
-            "user" => $this->geo->getUserIp()
+            "ip" => $session->has("ip") ? $session->get("ip") : "",
+            "user" => $this->geo->getUserIp(),
+            "latitude" => $session->has("latitude") ? $session->get("latitude") : "",
+            "longitude" => $session->has("longitude") ? $session->get("longitude") : "",
+            "country_name" => $session->has("country_name") ? $session->get("country_name") : "",
+            "city" => $session->has("city") ? $session->get("city") : "",
         ];
-
         $page->add("osln/ipvalidator/geo", $data);
         return $page->render();
     }
     public function responseActionGet() : object
     {
-        $user = $this->GeoValidator->getUserIp();
-        $ip = $this->di->request->getGet("ip");
-        $data = [
-            "ip" => $ip,
-            "user" => $user
-        ];
+        $session = $this->di->get("session");
 
-        $page = $this->di->get("page");
-        $page->add("osln/ipvalidator/geo", $data);
-        return $page->render();
+        $ip = $this->di->request->getGet("ip");
+        $geoInfo = $this->ipstack->fetchFromIp($ip);
+
+        $session->set("latitude", $geoInfo["latitude"]);
+        $session->set("type", $geoInfo["type"]);
+        $session->set("ip", $geoInfo["ip"]);
+        $session->set("longitude", $geoInfo["longitude"]);
+        $session->set("country_name", $geoInfo["country_name"]);
+        $session->set("city", $geoInfo["city"]);
+
+        $resp = $this->di->get("response");
+        return $resp->redirect("ipgeo");
     }
 }
