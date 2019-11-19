@@ -2,13 +2,8 @@
 
 namespace Osln\Geo;
 
-use Anax\Commons\ContainerInjectableInterface;
-use Anax\Commons\ContainerInjectableTrait;
-
-class IpstackModule implements ContainerInjectableInterface
+class IpstackModule
 {
-    use ContainerInjectableTrait;
-
     public function __construct()
     {
         $this->key = require(ANAX_INSTALL_PATH . "/config/ipstack.php");
