@@ -17,9 +17,14 @@ return [
             "handler" => "\Anax\Controller\IpValidatorControllerJson",
         ],
         [
-            "info" => "IP-validator to JSON",
+            "info" => "Geo ip validator",
             "mount" => "ipgeo",
             "handler" => "\Osln\Geo\IpGeoController",
+        ],
+        [
+            "info" => "Geo to json",
+            "mount" => "geojson",
+            "handler" => "\Osln\Geo\GeoJsonController",
         ],
     ]
 ];

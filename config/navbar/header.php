@@ -59,6 +59,11 @@ return [
                         "url" => "ipgeo",
                         "title" => "Ip Geo Locator.",
                     ],
+                    [
+                        "text" => "GeoJson",
+                        "url" => "geojson",
+                        "title" => "Ip Geo Locator with json respnse.",
+                    ],
                 ],
             ],
         ],
