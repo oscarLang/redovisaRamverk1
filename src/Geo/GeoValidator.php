@@ -2,15 +2,11 @@
 
 namespace Osln\Geo;
 
-use Anax\Commons\ContainerInjectableInterface;
-use Anax\Commons\ContainerInjectableTrait;
-
-//module for
 class GeoValidator
 {
     public function initialize() : void
     {
-        echo "init";
+        var_dump($this->di);
     }
     public function isValidIpv4($ip) : boolean
     {
@@ -22,6 +18,22 @@ class GeoValidator
     }
     public function getUserIp()
     {
-        return $_SERVER['REMOTE_ADDR'];
+        $ip = getenv('HTTP_CLIENT_IP')?:
+        getenv('HTTP_X_FORWARDED_FOR')?:
+        getenv('HTTP_X_FORWARDED')?:
+        getenv('HTTP_FORWARDED_FOR')?:
+        getenv('HTTP_FORWARDED')?:
+        getenv('REMOTE_ADDR');
+        return $ip;
+    }
+    public function setSession($geoInfo, $session)
+    {
+        $session->set("latitude", $geoInfo["latitude"]);
+        $session->set("type", $geoInfo["type"]);
+        $session->set("ip", $geoInfo["ip"]);
+        $session->set("longitude", $geoInfo["longitude"]);
+        $session->set("country_name", $geoInfo["country_name"]);
+        $session->set("city", $geoInfo["city"]);
+
     }
 }

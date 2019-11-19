@@ -20,6 +20,10 @@ class IpGeoController implements ContainerInjectableInterface
     {
         $this->geo = new GeoValidator();
         $this->ipstack = new IpstackModule();
+        $session = $this->di->get("session");
+        if (!$session->has("ip")) {
+            $session->set("ip", $this->geo->getUserIp());
+        }
     }
     /**
      * This is the index method action, it handles:
@@ -48,17 +52,11 @@ class IpGeoController implements ContainerInjectableInterface
     }
     public function responseActionGet() : object
     {
-        $session = $this->di->get("session");
-
         $ip = $this->di->request->getGet("ip");
         $geoInfo = $this->ipstack->fetchFromIp($ip);
 
-        $session->set("latitude", $geoInfo["latitude"]);
-        $session->set("type", $geoInfo["type"]);
-        $session->set("ip", $geoInfo["ip"]);
-        $session->set("longitude", $geoInfo["longitude"]);
-        $session->set("country_name", $geoInfo["country_name"]);
-        $session->set("city", $geoInfo["city"]);
+        $session = $this->di->get("session");
+        $this->geo->setSession($geoInfo, $session);
 
         $resp = $this->di->get("response");
         return $resp->redirect("ipgeo");
