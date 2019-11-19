@@ -40,7 +40,9 @@ class IpGeoController implements ContainerInjectableInterface
 
         $data = [
             "title" => "Input ip to validate",
+            "valid" => $session->has("valid") ? $session->get("valid") : "",
             "ip" => $session->has("ip") ? $session->get("ip") : "",
+            "type" => $session->has("type") ? $session->get("type") : "",
             "user" => $this->geo->getUserIp(),
             "latitude" => $session->has("latitude") ? $session->get("latitude") : "",
             "longitude" => $session->has("longitude") ? $session->get("longitude") : "",

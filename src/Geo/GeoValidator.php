@@ -8,11 +8,11 @@ class GeoValidator
     {
         var_dump($this->di);
     }
-    public function isValidIpv4($ip) : boolean
+    public function isValidIpv4($ip)
     {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
-    public function isValidIpv6($ip) : boolean
+    public function isValidIpv6($ip)
     {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
     }
@@ -35,5 +35,12 @@ class GeoValidator
         $session->set("country_name", $geoInfo["country_name"]);
         $session->set("city", $geoInfo["city"]);
 
+        $valid = "Not valid";
+        if ($this->isValidIpv4($geoInfo["ip"])) {
+            $valid = "Ip is valid IPV4";
+        } elseif ($this->isValidIpv6($geoInfo["ip"])) {
+            $valid = "Ip is valid IPV6";
+        }
+        $session->set("valid", $valid);
     }
 }

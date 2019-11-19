@@ -19,6 +19,8 @@ if (isset($class)) {
         <input type="submit" value="Send">
     </form>
     <?php if (isset($ip)): ?>
+        <p>Ip: <?=$ip?></p>
+        <p><?=$valid?></p>
         <p>Latitude: <?=$latitude?></p>
         <p>Longitude: <?=$longitude?></p>
         <p>Country: <?=$country_name?></p>
