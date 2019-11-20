@@ -68,6 +68,11 @@ return [
             ],
         ],
         [
+            "text" => "Väder",
+            "url" => "weather",
+            "title" => "Väder",
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",
