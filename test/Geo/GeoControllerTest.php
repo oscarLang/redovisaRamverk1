@@ -41,7 +41,6 @@ class GeoControllerTest extends TestCase
         $res = $this->controller->indexAction();
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
         $this->assertInstanceOf("Anax\Response\Response", $res);
-
     }
 
     public function testResponseAction()
