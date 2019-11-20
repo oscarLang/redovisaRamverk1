@@ -4,10 +4,6 @@ namespace Osln\Geo;
 
 class GeoValidator
 {
-    public function initialize() : void
-    {
-        var_dump($this->di);
-    }
     public function isValidIpv4($ip)
     {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);

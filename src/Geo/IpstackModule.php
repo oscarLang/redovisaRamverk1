@@ -8,10 +8,6 @@ class IpstackModule
     {
         $this->key = require(ANAX_INSTALL_PATH . "/config/ipstack.php");
     }
-    public function test()
-    {
-        var_dump($this->key["key"]);
-    }
     public function fetchFromIp($ip)
     {
         $url = "http://api.ipstack.com/" . $ip . "?access_key=" . $this->key["key"];
