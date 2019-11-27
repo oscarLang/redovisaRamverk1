@@ -20,6 +20,7 @@ class WeatherController implements ContainerInjectableInterface
         $this->curl = new CurlRequest();
         $this->config = new LoadConfig();
         $this->weather = new Weather();
+        $this->ipvalidate = new Ipvalidate();
     }
     /**
      * This is the index method action, it handles:
@@ -32,10 +33,13 @@ class WeatherController implements ContainerInjectableInterface
     public function indexAction() : object
     {
         $page = $this->di->get("page");
+        $session = $this->di->get("session");
 
         $data = [
             "title" => "Väder",
             "forecast" => $session->has("forecast") ? $session->get("forecast") : "",
+            "month" => $session->has("month") ? $session->get("month") : "",
+            "location" => "",
         ];
         $page->add("osln/weather/default", $data);
         return $page->render();
@@ -45,26 +49,47 @@ class WeatherController implements ContainerInjectableInterface
     {
         $search = $this->di->request->getGet("location");
         $session = $this->di->get("session");
-        if (filter_var($search, FILTER_VALIDATE_IP)) {
-            $key = $this->config->getKey("ipstack");
-            $url = "http://api.ipstack.com/%2\$s?access_key=%1\$s";
-            $urlFinal = sprintf($url, $key, $search);
-            echo $urlFinal;
-            $data = $this->curl->fetch($urlFinal);
-            if ($data) {
-                $forecast = $this->weather->forecast($data["lat"], $data["lon"]);
-                $session->set("forecast", $forecast);
-            }
+        $session->delete("month");
+        $url = $this->ipvalidate->getUrl($search);
+
+        $data = $this->curl->fetch($url);
+        // $forecast = NULL;
+
+        if (isset($data["latitude"])) {
+            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
+        } elseif (isset($data[0]["lat"])) {
+            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
         } else {
-            $url = "http://open.mapquestapi.com/nominatim/v1/search.php?q=%2\$s&limit=1&format=json&key=%1\$s";
-            $key = $this->config->getKey("mapquest");
-            $urlFinal = sprintf($url, $key, $search);
-            $data = $this->curl->fetch($urlFinal);
-            if ($data) {
-                $forecast = $this->weather->forecast($data["lat"], $data["lon"]);
-                $session->set("forecast", $forecast);
-            }
+            $session->set("error", "Could not find this location");
         }
-        return [$data];
+        $session->set("forecast", $forecast);
+
+        $resp = $this->di->get("response");
+        return $resp->redirect("weather");
+        // return [$data];
+    }
+    public function previousActionGet()
+    {
+        $search = $this->di->request->getGet("location");
+        $session = $this->di->get("session");
+        $url = $this->ipvalidate->getUrl($search);
+
+        $data = $this->curl->fetch($url);
+        $forecast = NULL;
+        if (isset($data["latitude"])) {
+            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
+            $month = $this->weather->getLastMonth($data["latitude"], $data["longitude"]);
+        } elseif (isset($data[0]["lat"])) {
+            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
+            $month = $this->weather->getLastMonth($data[0]["lat"], $data[0]["lon"]);
+        } else {
+            $session->set("error", "Could not find this location");
+        }
+        // return [$forecast];
+        $session->set("forecast", $forecast);
+        $session->set("month", $month);
+
+        $resp = $this->di->get("response");
+        return $resp->redirect("weather");
     }
 }
