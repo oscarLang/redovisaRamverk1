@@ -39,9 +39,11 @@ class WeatherController implements ContainerInjectableInterface
             "title" => "Väder",
             "forecast" => $session->has("forecast") ? $session->get("forecast") : "",
             "month" => $session->has("month") ? $session->get("month") : "",
+            "error" => $session->has("error") ? $session->get("error") : "",
             "location" => "",
         ];
         $page->add("osln/weather/default", $data);
+        $session->delete("error");
         return $page->render();
     }
 

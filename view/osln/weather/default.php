@@ -24,11 +24,18 @@ $i = 0;
   crossorigin=""></script>
 
 <article <?= classList($classes) ?>>
+    <?php if ($error): ?>
+        <div class="flashmessage info">
+            <span class="flashmessage-icon">&#9432;</span>
+            <p><?= $error ?></p>
+        </div>
+    <?php endif; ?>
+
     <h1><?= $title ?></h1>
     <form method="get">
         <input type="text" name="location" value=<?= $location ?>>
-        <button type="submit" formaction="weather/response">Vissa kommande väder</button>
-        <button type="submit" formaction="weather/previous">Vissa vädret för de senaste 30 dagarna</button>
+        <button type="submit" formaction="weather/response">Visa kommande väder</button>
+        <button type="submit" formaction="weather/previous">Visa vädret för de senaste 30 dagarna</button>
     </form>
     <div id="mapid" style="height:360px;"></div>
     <?php if ($forecast): ?>
