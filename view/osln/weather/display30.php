@@ -8,12 +8,12 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($for["daily"]["data"] as $value): ?>
+        <?php foreach ($month[0] as $day): ?>
             <tr>
                 <td><?=$i++?></td>
-                <td><?=$value["summary"]?></td>
-                <td><?=$value["temperatureHigh"]?></td>
-                <td><?=$value["windSpeed"]?></td>
+                <td><?=$day["daily"]["data"][0]["summary"]?></td>
+                <td><?=$day["daily"]["data"][0]["temperatureHigh"]?></td>
+                <td><?=$day["daily"]["data"][0]["windSpeed"]?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
