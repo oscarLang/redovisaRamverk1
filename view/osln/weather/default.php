@@ -11,26 +11,43 @@ $classes[] = "article";
 if (isset($class)) {
     $classes[] = $class;
 }
-$for = $forecast[0];
-var_dump($for["daily"]["data"]);
+// var_dump($forecast);
+if ($forecast) {
+    $for = $forecast[0];
+}
+// var_dump($for["daily"]["data"]);
 $i = 0;
 ?>
+<link rel="stylesheet" href="css/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
+
 <article <?= classList($classes) ?>>
     <h1><?= $title ?></h1>
-    <form action="weather/response" method="get">
+    <form method="get">
         <input type="text" name="location" value=<?= $location ?>>
-        <input type="submit" value="submit">
+        <button type="submit" formaction="weather/response">Vissa kommande väder</button>
+        <button type="submit" formaction="weather/previous">Vissa vädret för de senaste 30 dagarna</button>
     </form>
-
+    <div id="mapid" style="height:360px;"></div>
     <?php if ($forecast): ?>
-        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?layer=mapnik&zoom=12&amp;marker=<?=$for["latitude"]?>%2C<?=$for["longitude"]?>&zoom=12" style="border: 1px solid black">
-        </iframe>
-        <br/>
-        <small>
-            <a href="https://www.openstreetmap.org/?mlat=56.1805&amp;mlon=15.5866#map=15/56.1805/15.5866">Visa större karta</a>
-        </small>
+        <script type="text/javascript">
+            var mymap = L.map('mapid').setView([<?=$for["latitude"]?>, <?=$for["longitude"]?>], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: `&copy;
+                <a href="https://www.openstreetmap.org/copyright">
+                OpenStreetMap</a> contributors`
+            }).addTo(mymap);
+            var marker = L.marker([<?=$for["latitude"]?>, <?=$for["longitude"]?>]).addTo(mymap);
+        </script>
         <?php
-        require "displaytable.php"
+        if ($month) {
+            require "display30.php";
+        } else {
+            require "displaytable.php";
+        }
         ?>
     <?php endif; ?>
 </article>
