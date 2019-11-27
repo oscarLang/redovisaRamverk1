@@ -17,9 +17,9 @@ class WeatherController implements ContainerInjectableInterface
     use ContainerInjectableTrait;
     public function initialize() : void
     {
-        $this->curl = new CurlRequest();
         $this->config = new LoadConfig();
         $this->weather = new Weather();
+        $this->weather->setDI($this->di);
         $this->ipvalidate = new Ipvalidate();
     }
     /**
@@ -54,7 +54,7 @@ class WeatherController implements ContainerInjectableInterface
         $session->delete("month");
         $url = $this->ipvalidate->getUrl($search);
 
-        $data = $this->curl->fetch($url);
+        $data = $this->di->curl->fetch($url);
         // $forecast = NULL;
 
         if (isset($data["latitude"])) {
@@ -76,7 +76,7 @@ class WeatherController implements ContainerInjectableInterface
         $session = $this->di->get("session");
         $url = $this->ipvalidate->getUrl($search);
 
-        $data = $this->curl->fetch($url);
+        $data = $this->di->curl->fetch($url);
         $forecast = NULL;
         if (isset($data["latitude"])) {
             $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);

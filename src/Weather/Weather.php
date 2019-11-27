@@ -5,11 +5,11 @@ namespace Osln\Weather;
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 
-class Weather
+class Weather implements ContainerInjectableInterface
 {
+    use ContainerInjectableTrait;
     function __construct()
     {
-        $this->curl = new CurlRequest();
         $this->config = new LoadConfig();
     }
     public function forecast($lat, $lon) : array
@@ -17,7 +17,7 @@ class Weather
         $url = "https://api.darksky.net/forecast/%1\$s/%2\$s,%3\$s?exclude=currently,flags,hourly,minutely&units=si";
         $key = $this->config->getKey("darksky");
         $urlFinal = sprintf($url, $key, $lat, $lon);
-        $data = $this->curl->fetch($urlFinal);
+        $data = $this->di->curl->fetch($urlFinal);
         return [$data];
     }
 
@@ -32,7 +32,7 @@ class Weather
             $urls[] = $urlFinal;
         }
         // var_dump($urls);
-        $data = $this->curl->fetchMultiple($urls);
+        $data = $this->di->curl->fetchMultiple($urls);
         return [$data];
     }
 

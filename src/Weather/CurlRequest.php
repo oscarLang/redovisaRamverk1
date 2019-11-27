@@ -1,9 +1,12 @@
 <?php
 namespace Osln\Weather;
 
+use Anax\Commons\ContainerInjectableInterface;
+use Anax\Commons\ContainerInjectableTrait;
 
-class CurlRequest
+class CurlRequest implements ContainerInjectableInterface
 {
+    use ContainerInjectableTrait;
     public function fetch($url)
     {
         $ch = curl_init($url);

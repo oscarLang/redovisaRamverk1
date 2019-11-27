@@ -9,7 +9,6 @@ class Ipvalidate
 {
     function __construct()
     {
-        $this->curl = new CurlRequest();
         $this->config = new LoadConfig();
     }
     public function getUrl($search)
