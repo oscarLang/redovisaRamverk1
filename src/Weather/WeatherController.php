@@ -18,8 +18,6 @@ class WeatherController implements ContainerInjectableInterface
     public function initialize() : void
     {
         $this->config = new LoadConfig();
-        $this->weather = new Weather();
-        $this->weather->setDI($this->di);
         $this->ipvalidate = new Ipvalidate();
     }
     /**
@@ -55,12 +53,12 @@ class WeatherController implements ContainerInjectableInterface
         $url = $this->ipvalidate->getUrl($search);
 
         $data = $this->di->curl->fetch($url);
-        // $forecast = NULL;
+        $forecast = NULL;
 
         if (isset($data["latitude"])) {
-            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
+            $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
         } elseif (isset($data[0]["lat"])) {
-            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
+            $forecast = $this->di->weather->forecast($data[0]["lat"], $data[0]["lon"]);
         } else {
             $session->set("error", "Could not find this location");
         }
@@ -79,11 +77,11 @@ class WeatherController implements ContainerInjectableInterface
         $data = $this->di->curl->fetch($url);
         $forecast = NULL;
         if (isset($data["latitude"])) {
-            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
-            $month = $this->weather->getLastMonth($data["latitude"], $data["longitude"]);
+            $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
+            $month = $this->di->weather->getLastMonth($data["latitude"], $data["longitude"]);
         } elseif (isset($data[0]["lat"])) {
-            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
-            $month = $this->weather->getLastMonth($data[0]["lat"], $data[0]["lon"]);
+            $forecast = $this->di->weather->forecast($data[0]["lat"], $data[0]["lon"]);
+            $month = $this->di->weather->getLastMonth($data[0]["lat"], $data[0]["lon"]);
         } else {
             $session->set("error", "Could not find this location");
         }

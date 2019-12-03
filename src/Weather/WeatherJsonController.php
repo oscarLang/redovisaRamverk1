@@ -14,8 +14,6 @@ class WeatherJsonController implements ContainerInjectableInterface
     public function initialize() : void
     {
         $this->config = new LoadConfig();
-        $this->weather = new Weather();
-        $this->weather->setDI($this->di);
         $this->ipvalidate = new Ipvalidate();
     }
     /**
@@ -54,9 +52,9 @@ class WeatherJsonController implements ContainerInjectableInterface
         // $forecast = NULL;
 
         if (isset($data["latitude"])) {
-            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
+            $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
         } elseif (isset($data[0]["lat"])) {
-            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
+            $forecast = $this->di->weather->forecast($data[0]["lat"], $data[0]["lon"]);
         } else {
             return [["Could not find this location"]];
         }
@@ -81,11 +79,11 @@ class WeatherJsonController implements ContainerInjectableInterface
         $data = $this->di->curl->fetch($url);
         $forecast = NULL;
         if (isset($data["latitude"])) {
-            $forecast = $this->weather->forecast($data["latitude"], $data["longitude"]);
-            $month = $this->weather->getLastMonth($data["latitude"], $data["longitude"]);
+            $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
+            $month = $this->di->weather->getLastMonth($data["latitude"], $data["longitude"]);
         } elseif (isset($data[0]["lat"])) {
-            $forecast = $this->weather->forecast($data[0]["lat"], $data[0]["lon"]);
-            $month = $this->weather->getLastMonth($data[0]["lat"], $data[0]["lon"]);
+            $forecast = $this->di->weather->forecast($data[0]["lat"], $data[0]["lon"]);
+            $month = $this->di->weather->getLastMonth($data[0]["lat"], $data[0]["lon"]);
         }
         $data = [];
         $i = -1;
