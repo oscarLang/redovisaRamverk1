@@ -18,6 +18,7 @@ class Weather implements ContainerInjectableInterface
         $key = $this->config->getKey("darksky");
         $urlFinal = sprintf($url, $key, $lat, $lon);
         $data = $this->di->curl->fetch($urlFinal);
+        // file_put_contents("forecast.json", json_encode($data));
         return [$data];
     }
 
@@ -33,6 +34,7 @@ class Weather implements ContainerInjectableInterface
         }
         // var_dump($urls);
         $data = $this->di->curl->fetchMultiple($urls);
+        // file_put_contents("historic.json", json_encode($data));
         return [$data];
     }
 
