@@ -26,10 +26,5 @@ return [
             "mount" => "geojson",
             "handler" => "\Osln\Geo\GeoJsonController",
         ],
-        [
-            "info" => "Geo to json",
-            "mount" => "weather",
-            "handler" => "\Osln\Weather\WeatherController",
-        ],
     ]
 ];

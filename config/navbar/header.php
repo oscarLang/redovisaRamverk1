@@ -71,6 +71,20 @@ return [
             "text" => "Väder",
             "url" => "weather",
             "title" => "Väder",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Standard",
+                        "url" => "weather",
+                        "title" => "Weather.",
+                    ],
+                    [
+                        "text" => "JSON",
+                        "url" => "jsonweather",
+                        "title" => "Json.",
+                    ],
+                ]
+            ]
         ],
         [
             "text" => "Styleväljare",
