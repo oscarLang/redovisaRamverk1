@@ -15,16 +15,16 @@ class WeatherJsonControllerTest extends TestCase
         global $di;
 
         // Setup di
-        $this->di = new DIFactoryConfig();
-        $this->di->loadServices(ANAX_INSTALL_PATH . "/config/di");
+        $di = new DIFactoryConfig();
+        $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
 
         // Use a different cache dir for unit test
-        $this->di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
+        $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
-        $this->di->setShared("weather", "Osln\Weather\WeatherMock");
+        $di->setShared("weather", "Osln\Weather\WeatherMock");
 
         // View helpers uses the global $di so it needs its value
-        $di = $this->di;
+        $this->di = $di;
         $this->controller = new WeatherJsonController();
         $this->controller->setDI($this->di);
         $this->controller->initialize();
@@ -58,7 +58,6 @@ class WeatherJsonControllerTest extends TestCase
 
         $res = $this->controller->responseActionGet();
         $this->assertIsArray($res);
-
     }
 
     public function testPreviousAction()
