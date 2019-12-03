@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($month[0] as $day): ?>
+        <?php foreach ($month[0] as $day) : ?>
             <tr>
                 <td><?=$i++?></td>
                 <td><?=$day["daily"]["data"][0]["summary"]?></td>

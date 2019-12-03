@@ -24,7 +24,7 @@ $i = 0;
   crossorigin=""></script>
 
 <article <?= classList($classes) ?>>
-    <?php if ($error): ?>
+    <?php if ($error) : ?>
         <div class="flashmessage info">
             <span class="flashmessage-icon">&#9432;</span>
             <p><?= $error ?></p>
@@ -38,7 +38,7 @@ $i = 0;
         <button type="submit" formaction="weather/previous">Visa vädret för de senaste 30 dagarna</button>
     </form>
     <div id="mapid" style="height:360px;"></div>
-    <?php if ($forecast): ?>
+    <?php if ($forecast) : ?>
         <script type="text/javascript">
             var mymap = L.map('mapid').setView([<?=$for["latitude"]?>, <?=$for["longitude"]?>], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

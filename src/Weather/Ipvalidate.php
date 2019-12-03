@@ -13,10 +13,9 @@ class Ipvalidate
     }
     public function getUrl($search)
     {
-        $url = NULL;
-        $key = NULL;
-        if (filter_var($search, FILTER_VALIDATE_IP))
-        {
+        $url = null;
+        $key = null;
+        if (filter_var($search, FILTER_VALIDATE_IP)) {
             $key = $this->config->getKey("ipstack");
             $url = "http://api.ipstack.com/%2\$s?access_key=%1\$s";
         } else {

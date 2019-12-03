@@ -53,7 +53,7 @@ class WeatherController implements ContainerInjectableInterface
         $url = $this->ipvalidate->getUrl($search);
 
         $data = $this->di->curl->fetch($url);
-        $forecast = NULL;
+        $forecast = null;
 
         if (isset($data["latitude"])) {
             $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
@@ -75,7 +75,7 @@ class WeatherController implements ContainerInjectableInterface
         $url = $this->ipvalidate->getUrl($search);
 
         $data = $this->di->curl->fetch($url);
-        $forecast = NULL;
+        $forecast = null;
         if (isset($data["latitude"])) {
             $forecast = $this->di->weather->forecast($data["latitude"], $data["longitude"]);
             $month = $this->di->weather->getLastMonth($data["latitude"], $data["longitude"]);

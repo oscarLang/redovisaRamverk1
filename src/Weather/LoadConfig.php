@@ -2,7 +2,6 @@
 
 namespace Osln\Weather;
 
-
 class LoadConfig
 {
     public function getKey($name)

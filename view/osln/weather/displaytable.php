@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($for["daily"]["data"] as $value): ?>
+        <?php foreach ($for["daily"]["data"] as $value) : ?>
             <tr>
                 <td><?=$i++?></td>
                 <td><?=$value["summary"]?></td>

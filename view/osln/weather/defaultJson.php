@@ -22,7 +22,7 @@ if ($forecast) {
   crossorigin=""></script>
 
 <article <?= classList($classes) ?>>
-    <?php if ($error): ?>
+    <?php if ($error) : ?>
         <div class="flashmessage info">
             <span class="flashmessage-icon">&#9432;</span>
             <p><?= $error ?></p>
