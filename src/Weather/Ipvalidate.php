@@ -7,7 +7,7 @@ use Anax\Commons\ContainerInjectableTrait;
 
 class Ipvalidate
 {
-    function __construct()
+    public function __construct()
     {
         $this->config = new LoadConfig();
     }

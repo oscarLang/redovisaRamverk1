@@ -8,7 +8,7 @@ use Anax\Commons\ContainerInjectableTrait;
 class Weather implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
-    function __construct()
+    public function __construct()
     {
         $this->config = new LoadConfig();
     }
