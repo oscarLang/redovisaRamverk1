@@ -25,7 +25,6 @@ return [
             ],
         ],
     ],
-
     // These views are always loaded into the collection of views.
     "views" => [
         // [
