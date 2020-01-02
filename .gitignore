@@ -5,3 +5,4 @@ memory::
 composer.lock
 /config/ipstack.php
 /config/apikeys.php
+/data
