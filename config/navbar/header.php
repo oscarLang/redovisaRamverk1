@@ -87,6 +87,11 @@ return [
             ]
         ],
         [
+            "text" => "Book",
+            "url" => "book",
+            "title" => "Books.",
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",
